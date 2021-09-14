@@ -1,6 +1,6 @@
 # ogl-fresnel-starter
 
-http://fresnel-fun.surge.sh/
+fresnel-fun-ogl.surge.sh
 
 ## Fresnel
 

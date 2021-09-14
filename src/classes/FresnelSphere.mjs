@@ -24,51 +24,61 @@ export default class FresnelSphere {
 		// Builds a new GLSL shader program
 		// This is roughly the same instanciating a ShaderMaterial in ThreeJS
 		this.program = new Program(this.gl, {
+
+
+
 			vertex: /* glsl */ `
-        attribute vec3 position;
-				attribute vec2 uv;
-				attribute vec3 normal;
+					attribute vec3 position;
+					attribute vec2 uv;
+					attribute vec3 normal;
 
-        uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix;
+					uniform mat4 modelViewMatrix;
+					uniform mat4 projectionMatrix;
 
-				varying vec2 vUv;
-				varying vec3 vNormal;
-				varying vec3 vPosition;
+					varying vec2 vUv;
+					varying vec3 vNormal;
+					varying vec3 vPosition;
 
-        void main() {					
-					gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+					void main() {					
+						// Definir position dans l'espace
+						gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 
-					vPosition = position;
-					vUv = uv;
-					vNormal = normalize(vec3(mat3(modelViewMatrix) * normal));
-        }
-        `,
+						vPosition = position;
+						vUv = uv;
+						vNormal = normalize(vec3(mat3(modelViewMatrix) * normal));
+					}
+        	`,
+
+
+
+
 			fragment: /* glsl */ `
-				precision highp float;
+					precision highp float;
 
-				varying vec2 vUv;
-				varying vec3 vNormal;
-				varying vec3 vPosition;
+					varying vec2 vUv;
+					varying vec3 vNormal;
+					varying vec3 vPosition;
 
-				uniform vec3 fresnelColor;
-				uniform vec3 baseColor;
-				uniform float powerOfFactor;
-				uniform vec3 cameraPosition;
-				uniform float alpha;
+					uniform vec3 fresnelColor;
+					uniform vec3 baseColor;
+					uniform float powerOfFactor;
+					uniform vec3 cameraPosition;
+					uniform float alpha;
 
-				void main() {
-					vec3 viewDirection = normalize(cameraPosition - vec3(vPosition.x, vPosition.y, vPosition.z));
-					float fresnelFactor = dot(viewDirection, vNormal);
-					
-					float inversefresnelFactor = clamp(1. - fresnelFactor, 0., 1.);
-					
-					// Shaping function
-					fresnelFactor = pow(fresnelFactor, powerOfFactor);
-					inversefresnelFactor = pow(inversefresnelFactor, powerOfFactor);
+					void main() {
+						vec3 viewDirection = normalize(cameraPosition - vec3(vPosition.x, vPosition.y, vPosition.z));
+						float fresnelFactor = dot(viewDirection, vNormal);
+						
+						float inversefresnelFactor = clamp(1. - fresnelFactor, 0., 1.);
+						
+						// Shaping function
+						fresnelFactor = pow(fresnelFactor, powerOfFactor);
+						inversefresnelFactor = pow(inversefresnelFactor, powerOfFactor);
 
-					gl_FragColor = vec4(fresnelFactor * baseColor + fresnelColor * inversefresnelFactor, alpha);
-				}
+						gl_FragColor = vec4(fresnelFactor * baseColor + fresnelColor * inversefresnelFactor, alpha);
+
+						// gl_FragColor = vec4(vec3(inversefresnelFactor, 0., 0.), 1.);
+					}
 			`,
 			uniforms: {
 				fresnelColor: {
@@ -99,7 +109,7 @@ export default class FresnelSphere {
 		// This is roughly the same as this.scene.add() in ThreeJS
 		this.mesh.setParent(this.scene);
 
-		this.tweaks();
+		// this.tweaks();
 	}
 
 	tweaks() {
@@ -147,7 +157,7 @@ export default class FresnelSphere {
 	}
 
 	update() {
-		this.mesh.rotation.y -= 0.015;
-		this.mesh.rotation.x += 0.0075;
+		// this.mesh.rotation.y -= 0.015;
+		// this.mesh.rotation.x += 0.0075;
 	}
 }

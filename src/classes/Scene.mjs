@@ -14,8 +14,8 @@ export default class Scene {
 		this.camera = new Camera(this.gl);
 		this.camera.position.z = 5;
 		this.scene = new Transform();
-		this.pane = new Tweakpane();
-		this.FresnelSphere = new FresnelSphere(this.gl, this.scene, this.camera, this.pane);
+		// this.pane = new Tweakpane();
+		this.FresnelSphere = new FresnelSphere(this.gl, this.scene, this.camera);
 	}
 
 	init = () => {
@@ -30,7 +30,7 @@ export default class Scene {
 	setEvents = () => {
 		window.addEventListener('resize', this.resize, false);
 		window.addEventListener('keypress', (e) => {
-			if (e.code === 'KeyH') this.pane.hidden = !this.pane.hidden;
+			// if (e.code === 'KeyH') this.pane.hidden = !this.pane.hidden;
 		});
 	};
 

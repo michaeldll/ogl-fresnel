@@ -22,7 +22,7 @@ export default class FresnelSphere {
 		});
 
 		// Builds a new GLSL shader program
-		// This is roughly the same instanciating a ShaderMaterial in ThreeJS
+		// This is roughly the same as instanciating a ShaderMaterial in ThreeJS
 		this.program = new Program(this.gl, {
 
 
@@ -109,7 +109,7 @@ export default class FresnelSphere {
 		// This is roughly the same as this.scene.add() in ThreeJS
 		this.mesh.setParent(this.scene);
 
-		// this.tweaks();
+		this.tweaks();
 	}
 
 	tweaks() {
@@ -157,7 +157,7 @@ export default class FresnelSphere {
 	}
 
 	update() {
-		// this.mesh.rotation.y -= 0.015;
-		// this.mesh.rotation.x += 0.0075;
+		this.mesh.rotation.y -= 0.015;
+		this.mesh.rotation.x += 0.0075;
 	}
 }
